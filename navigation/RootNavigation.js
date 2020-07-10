@@ -1,30 +1,40 @@
 import { Notifications } from 'expo';
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
-import MainTabNavigator from './MainTabNavigator';
+// import { StackNavigator } from 'react-navigation';
+// import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 import LoginScreen from './../screens/auth/LoginScreen';
 import SignupScreen from './../screens/auth/SignupScreen';
 import ForgotPasswordScreen from './../screens/auth/ForgotPasswordScreen';
-import Maincontent from '../screens/Maincontent';
+import Maincontent from './../screens/Maincontent';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-const RootStackNavigator = StackNavigator(
-  {
-    Login: { screen: LoginScreen },
-    Signup: { screen: SignupScreen },
-    ForgotPassword: { screen: ForgotPasswordScreen },
+const Stack = createStackNavigator();
 
-    Main: { screen: Maincontent, },
-  },
+function RootStackNavigator()
   {
-    navigationOptions: () => ({
-      headerTitleStyle: {
-        fontWeight: 'normal',
-      },
-    }),
-  }
-);
+    return(
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login" >
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
+          <Stack.Screen name="Maincontent" component={Maincontent} />
+        </Stack.Navigator>
+    </NavigationContainer>
+    // Login: { screen: LoginScreen },
+    // Signup: { screen: SignupScreen },
+    // ForgotPassword: { screen: ForgotPasswordScreen },
+
+    // Main: { screen: Maincontent, },
+    )};
+    
+  
+
+// const Stack = createStackNavigator();
+
 
 export default class RootNavigator extends React.Component {
   componentDidMount() {
@@ -37,6 +47,16 @@ export default class RootNavigator extends React.Component {
 
   render() {
     return <RootStackNavigator />;
+    // return(
+    //     <NavigationContainer>
+    //      <Stack.Navigator>
+    //        <Stack.Screen name="Login" component={LoginScreen} />
+    //        <Stack.Screen name="Signup" component={SignupScreen} />
+    //        <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
+    //        <Stack.Screen name="MainContent" component={MainContent} />
+    //      </Stack.Navigator>
+    //    </NavigationContainer>
+    // );
   }
 
   _registerForPushNotifications() {

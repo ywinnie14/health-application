@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, View, Text, TextInput, Button, Alert} from 'react-native';
-import AngryCat from './../../images/angryCat.png';
+import SleepyCat from './../../images/sleepyCat.png';
 // import {NavigationActions} from 'react-navigation';
 import * as firebase from 'firebase';
 
@@ -16,7 +16,7 @@ export default class LoginScreen extends React.Component{
     onLoginPress = () => {
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(function(result){
-
+                Alert.alert("Hello!");
             }) .catch(function(error){
                 Alert.alert(error.message);
             });
@@ -29,11 +29,16 @@ export default class LoginScreen extends React.Component{
         // });
         // this.navigation.dispatch(navActions);
         // this.props.navigation.navigate("SignupScreen");
+        
+        
         this.props.navigation.reset({
             index: 0,
             routes: [{name: "Signup"}]
 
         });
+
+        
+
     }
 
 
@@ -56,19 +61,32 @@ export default class LoginScreen extends React.Component{
             <TextInput style={{width:200, height:40, borderWidth:1}} 
                 value={this.state.email}
                 onChangeText={(text) => {this.setState({email:text}) }}
+                placeholder="Email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
             />
+
+            <View style={{paddingTop: 10}}/>
 
             <TextInput style={{width:200, height:40, borderWidth:1}} 
-                value={this.state.password}
+                value={this.state.password} 
                 onChangeText={(text) => {this.setState({password:text}) }}
-            />
+                placeholder="Password"
+                secureTextEntry={true}
+                autoCapitalize="none"
+                autoCorrect={false}
+            /> 
+            <View style={{paddingTop: 10}}/>
 
             <Button title="Login" onPress={this.onLoginPress}/>
+            <View style={{paddingTop: 10}}/>
             {/* <Button title="Creat Account" onPress={this.onCreateAccountPress.bind(this)}/> */}
             <Button title="Creat Account" onPress={()=> { this.onCreateAccountPress(); }}/>
+            <View style={{paddingTop: 10}}/>
             <Button title="Forgot Password" onPress={()=> { this.onForgotPasswordPress(); }}/>
 
-            {/* <Image source={AngryCat}/> */}
+            <Image source={SleepyCat}/>
         </View>
         );
 

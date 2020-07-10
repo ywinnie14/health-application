@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, ScrollView, StyleSheet, Text, View, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import { Switch, ScrollView, StyleSheet, Text, View, TouchableOpacity, TouchableNativeFeedback, Button, Alert} from 'react-native';
 import Constants from 'expo-constants';
 import {RVcollapsibleSingle} from '../src/RVcollapsibleSingle';
 import * as Animatable from 'react-native-animatable';
@@ -16,6 +16,18 @@ const CONTENT = [
     {
       title: '將心比心也有錯? ',
       content: '心臟病發的症狀男女不一，男性症狀歷來冠為典型，孰不知男女有別? 由急性心肌梗塞引發的心臟病症狀有典型的胸口緊悶、氣短、噁心、冒冷汗、頭暈。胸口擠壓的感受可能轉往或只呈現於左肩、下顎、頸部、手臂。其他相關的非典型症狀有如腹痛、背痛、體虛、疲倦、右肩和手臂緊壓等。男性症狀大數以典型症狀求醫，女性病發症狀比起來較複雜，典型症狀仍然居多，但亦可以非典型症狀呈現、或被忽略。',
+    },
+    {
+      title: 'Don’t skip breakfast.',
+      content: 'Studies show that eating a proper breakfast is one of the most positive things you can do if you are trying to lose weight. Breakfast skippers tend to gain weight. A balanced breakfast includes fresh fruit or fruit juice, a high-fibre breakfast cereal, low-fat milk or yoghurt, wholewheat toast, and a boiled egg.',
+    },
+    {
+      title: 'Neurobics for your mind. ',
+      content: 'Get your brain fizzing with energy. American researchers coined the term ‘neurobics’ for tasks which activate the brains own biochemical pathways and to bring new pathways online that can help to strengthen or preserve brain circuits. Brush your teeth with your ‘other’ hand, take a new route to work or choose your clothes based on sense of touch rather than sight. People with mental agility tend to have lower rates of Alzheimer’s disease and age-related mental decline.',
+    },
+    {
+      title: 'Knock one back.',
+      content: 'A glass of red wine a day is good for you. A number of studies have found this, but a recent one found that the polyphenols (a type of antioxidant) in green tea, red wine and olives may also help protect you against breast cancer. It’s thought that the antioxidants help protect you from environmental carcinogens such as passive tobacco smoke.',
     },
   ];
 
@@ -62,13 +74,17 @@ export default class Maincontent extends Component {
       );
     }
 
+    onSignoutPress = () => {
+      firebase.auth().signOut();
+  }
+
     render() {
-      const {container, content, collapsing } = styles;
+      const {container, content, collapsing }  = styles;
 
       return (
         <View style={container}>
           <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
-          <RVcollapsibleSingle
+            <RVcollapsibleSingle
               // title = "Daily Health App"
               renderHeader={this.renderHeaderSingle()}
             /> 
@@ -79,71 +95,9 @@ export default class Maincontent extends Component {
               renderContent={this.renderContent}
               duration={400}
             />
-            {/* <RVcollapsibleSingle
-              title = "Single Collapsible"
-              renderHeader={this.renderHeaderSingle()}
-            > 
-              <View style={content}>
-                <Text>
-                  Bacon ipsum dolor amet chuck turducken landjaeger tongue spare
-                  ribs
-                </Text>
-              </View>
-            </RVcollapsibleSingle> */}
 
-            {/* <Text style={styles.title}>Accordion Example</Text>
-            <View style={styles.multipleToggle}>
-              <Text style={styles.multipleToggle__title}>Multiple Select?</Text>
-              <Switch
-                value={multipleSelect}
-                onValueChange={a => this.setState({ multipleSelect: a })}
-              />
-            </View> */}
-
-            {/* <View style={styles.selectors}>
-              <Text style={styles.selectTitle}>Select:</Text>
-              {SELECTORS.map(selector => (
-                <TouchableOpacity
-                  key={selector.title}
-                  onPress={() => this.setSections([selector.value])}
-                >
-                  <View style={styles.selector}>
-                    <Text
-                      style={
-                        activeSections.includes(selector.value) &&
-                        styles.activeSelector
-                      }
-                    >
-                      {selector.title}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </View> */}
-
-            {/* <TouchableOpacity onPress={this.toggleExpanded}>
-              <View style={header}>
-                <Text style={headerText}>Single Collapsible</Text>
-              </View>
-            </TouchableOpacity>
-            <Collapsible collapsed={this.state.collapsed} align="center">
-              <View style={content}>
-                <Text>
-                  Bacon ipsum dolor amet chuck turducken landjaeger tongue spare
-                  ribs
-                </Text>
-              </View>
-            </Collapsible> */}
-            {/* <Accordion
-              activeSections={activeSections}
-              sections={CONTENT}
-              touchableComponent={TouchableOpacity}
-              expandMultiple={multipleSelect}
-              renderHeader={this.renderHeader}
-              renderContent={this.renderContent}
-              duration={400}
-              onChange={this.setSections}
-            /> */}
+            <Button title="Signout" onPress={this.onSignoutPress}/>   
+            
           </ScrollView>
         </View>
       );
