@@ -17,11 +17,11 @@ function RootStackNavigator()
   {
     return(
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login" >
+        <Stack.Navigator initialRouteName="Signup" >
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
-          <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
-          <Stack.Screen name="Maincontent" component={Maincontent} />
+          {/* <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} /> */}
+          {/* <Stack.Screen name="Maincontent" component={Maincontent} /> */}
         </Stack.Navigator>
     </NavigationContainer>
     // Login: { screen: LoginScreen },
@@ -46,17 +46,15 @@ export default class RootNavigator extends React.Component {
   }
 
   render() {
-    return <RootStackNavigator />;
-    // return(
-    //     <NavigationContainer>
-    //      <Stack.Navigator>
-    //        <Stack.Screen name="Login" component={LoginScreen} />
-    //        <Stack.Screen name="Signup" component={SignupScreen} />
-    //        <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
-    //        <Stack.Screen name="MainContent" component={MainContent} />
-    //      </Stack.Navigator>
-    //    </NavigationContainer>
-    // );
+    //return <RootStackNavigator />;
+    return(
+         <Stack.Navigator>
+           <Stack.Screen name="Login" component={LoginScreen} />
+           <Stack.Screen name="Signup" component={SignupScreen} />
+           <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
+           <Stack.Screen name="MainContent" component={Maincontent} />
+         </Stack.Navigator>
+    );
   }
 
   _registerForPushNotifications() {

@@ -5,7 +5,7 @@ const PUSH_ENDPOINT = 'https://expo-push-server.herokuapp.com/tokens';
 
 export default (async function registerForPushNotificationsAsync() {
   // Remote notifications do not work in simulators, only on device
-  if (!Constants.isDevice) {
+  if (!Constants || !Constants.isDevice) {
     return;
   }
 

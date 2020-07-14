@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text, TextInput, Button, Alert, Image} from 'react-native';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 import AngryCat from './../../images/angryCat.png';
+import Firebase from './../../src/Database/Firebase';
 
 export default class ForgotPasswordScreen extends React.Component{
     constructor(props){
@@ -11,13 +12,17 @@ export default class ForgotPasswordScreen extends React.Component{
         };
     }
 
-    onResetPasswordPress = () => {
-        firebase.auth().sendPasswordResetEmail(this.state.email)
-            .then(() => {
-                Alert.alert("Password reset email has been sent.");
-            }, (error)=> {
-                Alert.alert(error.message);
+    onResetPasswordPress() {
+        Firebase.ResetPassword(this.state.email)
+        .then(function(result){
+            Alert.alert("Password reset email has been sent.");
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{name: "Login"}]
             });
+        }.bind(this)).catch(error => {
+            Alert.alert(error.message);
+        });
     } 
 
     onBackToLoginPress = () => {
@@ -40,7 +45,7 @@ export default class ForgotPasswordScreen extends React.Component{
                     autoCorrect={false}
                 />
                 <View style={{paddingTop: 10}}/>
-                <Button title="Reset Password" onPress={this.onResetPasswordPress}/>
+                <Button title="Reset Password" onPress={this.onResetPasswordPress.bind(this)}/>
                 <View style={{paddingTop: 10}}/>
                 <Button title="Back to Login" onPress={()=> { this.onBackToLoginPress(); }}/>
                 <Image source={AngryCat}/>

@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, TextInput, Button, Alert, Image} from 'react-native';
 import * as firebase from 'firebase';
 import SignUpCat from './../../images/signUpCat.jpg';
+import Firebase from './../../src/Database/Firebase';
 
 export default class SignupScreen extends React.Component{
     constructor(props){
@@ -19,12 +20,16 @@ export default class SignupScreen extends React.Component{
             Alert.alert("Passwords do not match");
             return;
         }
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        Firebase.SignUp(this.state.email, this.state.password)
         .then(function(result){
-
-        }) .catch(function(error){
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{name: "Maincontent"}]
+            }); //this.doesn't exist => react - need to bind to get the data from this
+        }.bind(this)) .catch(function(error){
             Alert.alert(error.message);
         });
+
     }
 
     onBackToLoginPress = () => {
@@ -69,10 +74,10 @@ export default class SignupScreen extends React.Component{
                     autoCorrect={false}
                 />
                 <View style={{paddingTop: 10}}/>
-                <Button title="Signup" onPress={this.onSignupPress}/>
+                <Button title="Signup" onPress={this.onSignupPress.bind(this)}/>
                 <View style={{paddingTop: 10}}/>
                 {/* <Button title="Creat Account" onPress={this.onCreateAccountPress.bind(this)}/> */}
-                <Button title="Back to Login" onPress={()=> { this.onBackToLoginPress(); }}/>
+                <Button title="Back to Login" onPress={this.onBackToLoginPress.bind(this)}/>
     
                 <Image source={SignUpCat}/>
             </View>

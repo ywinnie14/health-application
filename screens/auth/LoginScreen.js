@@ -3,23 +3,41 @@ import {Image, StyleSheet, View, Text, TextInput, Button, Alert} from 'react-nat
 import SleepyCat from './../../images/sleepyCat.png';
 // import {NavigationActions} from 'react-navigation';
 import * as firebase from 'firebase';
+import Firebase from './../../src/Database/Firebase';
 
 export default class LoginScreen extends React.Component{
     constructor(props){
-        super(props);
+
+        super(...arguments);
         this.state = {
             email: "",
             password:"",
         };
     }
 
-    onLoginPress = () => {
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(function(result){
-                Alert.alert("Hello!");
-            }) .catch(function(error){
-                Alert.alert(error.message);
-            });
+    async onLoginPress() {
+        try{
+        await Firebase.SignIn(this.state.email, this.state.password)
+        if (Firebase.User) {
+            this.props.navigation.reset({
+                index: 0,
+                routes: [ { name: "Maincontent" } ]
+            })
+        }}
+        catch(error){
+            Alert.alert(error.message)
+        }
+        // .then(function(result){
+        //     Alert.alert("Hello!");
+        //     this.props.navigation.reset({
+        //         index: 0,
+        //         routes: [ { name: "Maincontent" } ]
+        //     })
+        // }) .catch(function(error){
+        //     Alert.alert(error.message);
+        // });
+        // firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+            
     }
 
     onCreateAccountPress = () => {
@@ -55,6 +73,7 @@ export default class LoginScreen extends React.Component{
         // this.navigation = navigation;
         // const {navigation,route}=this.props;
 
+
         return( 
         <View style={{paddingTop:50, alignItems:"center"}}>
             {/* <Text>Login</Text> */}
@@ -79,7 +98,7 @@ export default class LoginScreen extends React.Component{
             /> 
             <View style={{paddingTop: 10}}/>
 
-            <Button title="Login" onPress={this.onLoginPress}/>
+            <Button title="Login" onPress={this.onLoginPress.bind(this)}/>
             <View style={{paddingTop: 10}}/>
             {/* <Button title="Creat Account" onPress={this.onCreateAccountPress.bind(this)}/> */}
             <Button title="Creat Account" onPress={()=> { this.onCreateAccountPress(); }}/>
